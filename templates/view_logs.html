@@ -1,0 +1,41 @@
+{% extends 'layout.html' %}
+{% block content %}
+    <div>
+        <h4>Hi {{current_user.username}} Here is your {{tracker_name}} Tracker Logs</h4>
+        {% if logs | length == 0 %}
+            <h5>You have no Logs in {{tracker_name}} Tracker</h5>
+        {% else%}
+            {% if log_type == "Numeric" %}
+                <div>
+                    <h5>Your Logs Trendlines</h5>
+                    <img src="/static/graph.png" alt="This is Graph" class="img-fluid" />
+                </div>
+            {% endif %}
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>On</th>
+                        <th>Value</th>
+                        <th>Notes</th>
+                        <th></th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <body>
+                    {% for log in logs %}
+                        <tr>
+                            <td>{{ log.when.strftime('%d-%m-%y %a %H:%M:%S') }}</td>
+                            <td>{{ log.value }}</td>
+                            <td>{{ log.notes }}</td>
+                            <td><a class="btn btn-info" href="{{ url_for('update_logs', user_id = current_user.user_id, tracker_name=log.tracker_name , log_id = log.log_id)}}">Edit</a></td>
+                            <td><a class="btn btn-danger" href="{{ url_for('delete_log', user_id = current_user.user_id, tracker_name=log.tracker_name , log_id = log.log_id)}}">Delete</a></td>
+                        </tr>
+                    {% endfor %}
+                </body>
+            </table>
+        {% endif %}
+        <a class="btn btn-primary" href="{{ url_for('add_logs', tracker_name = tracker_name, user_id = current_user.user_id ) }}">Add new Log in {{tracker_name}} Tracker</a>
+        <br><br>
+        <a href="{{ url_for('user_trackers', user_id = current_user.user_id ) }}">Go back</a> <br>  <a href="{{ url_for('home') }}">Go to home</a>
+    </div>
+{% endblock %}

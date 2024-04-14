@@ -1,0 +1,10 @@
+{% extends 'layout.html' %}
+{% block content %}
+    <div class="text-center" style="padding-top: 200px;">
+        <h1>Hello {{ current_user.username }}</h1>   
+        <p style="margin-top: 20px;">This is A QuantifiedSelf App In Which you Create Trackers. And you can log in as many logs you want.</p>    
+        <a href="{{ url_for('user_trackers', user_id = current_user.user_id) }}" class="btn btn-info btn-lg" role="button">Your Trackers</a>
+        <a href="{{ url_for('add_tracker', user_id = current_user.user_id) }}" class="btn btn-success btn-lg" role="button">Create Tracker</a>
+    </div>
+
+{% endblock content %}

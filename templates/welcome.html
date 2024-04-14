@@ -1,0 +1,10 @@
+{% extends 'layout.html' %}
+{% block content %}
+    <div class="text-center" style="padding-top: 200px;">
+        <h1>Welcome to QuantifiedSelf App</h1>   
+        <p>This is A Quantified App In Which you Create Trackers. And you can log in as many logs you want.</p>    
+        <a href="{{ url_for('login') }}" class="btn btn-info btn-lg" role="button">Sign In</a>
+        <a href="{{ url_for('register') }}" class="btn btn-success btn-lg" role="button">Sign Up</a>
+    </div>
+ 
+{% endblock content %}

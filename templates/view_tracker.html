@@ -1,0 +1,40 @@
+{% extends 'layout.html' %}
+{% block content %}
+    <div>
+        {% if trackers | length == 0 %}
+            <p>You have not created any Trackers</p>
+        {% else %}
+            <h2>Hello {{current_user.username}}, There are your trackers</h2>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Your Trackers</th>
+                        <th>last Review</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+            {% for tracker in trackers %}
+                <tbody>
+                    <tr>
+                        <td><a href="/viewlogs/{{ tracker.tracker_name }}/{{ current_user.user_id }}">{{ tracker.tracker_name }}</a></td>
+                        {% if tracker.last_reviewed  %}
+                            <td>{{ tracker.last_reviewed }}</td>
+                        {% else %}
+                            <td>Not yet Reviewed</td>
+                        {% endif %}
+                        <td><a class="btn btn-success" href="/addlogs/{{ tracker.tracker_name }}/{{current_user.user_id}}">+Add Log</a></td>
+                        <td><a class="btn btn-danger" href="/deletetracker/{{ tracker.tracker_name }}/{{current_user.user_id}}">delete</a></td>
+                    </tr>
+                </tbody>
+            {% endfor %}
+            </table>
+        {% endif %}
+        <div >
+            <a class="btn btn-primary" href="{{ url_for('add_tracker', user_id = current_user.user_id ) }}">Add New Tracker</a>
+        </div>
+        <br>
+         
+        <a href="{{ url_for('home') }}">Go to home</a>
+        
+    </div>
+{% endblock %}

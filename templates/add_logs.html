@@ -1,0 +1,35 @@
+{% extends 'layout.html' %}
+{% block content %}
+    <div>
+        <h1>Hello {{current_user.username}}</h1>
+        <div>
+            <h4>Add Log into {{tracker.tracker_name}}</h4>
+            <br>
+            <form action="/addlogs/{{tracker.tracker_name}}/{{current_user.user_id}}" , method="post">
+                <div class="form-group">
+                    <label>value</label>
+                    {% if tracker.tracker_type == "Numeric" %}
+                        <input class="form-control" name="value" type = "text"  required/>
+                    {% else %}
+                        <select name="value">
+                            {% for choice in multiple_choice_list %}
+                            <option value="{{choice}}">{{choice}}</option>
+                            {% endfor %}
+                        </select>
+                    {% endif %}
+                </div>
+                <div class="form-group">
+                    <label>Notes</label>
+                    <input class="form-control" type="text" name="notes" required/>
+                </div>
+                
+                <input class="btn btn-primary" type="submit" value="Add Log"/>
+            </form>
+        </div>
+        <br>
+        <a href="{{ url_for('user_trackers', user_id = current_user.user_id ) }}">Go back</a> 
+        <br>  
+        <a href="{{ url_for('home') }}">Go to home</a>
+    </div>
+{% endblock %}
+
